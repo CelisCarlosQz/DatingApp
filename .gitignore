@@ -1,0 +1,9 @@
+Api/bin
+Api/obj
+Api/appsettings.json
+Api/appsettings.Development.json
+Spa/node_modules
+.vscode
+.DS_Store
+Spa/.DS_Store
+Api/.DS_Store
