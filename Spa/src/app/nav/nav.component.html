@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Dating App</a>
+  
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Matches</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Listas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" tabindex="-1">Mensajes</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" tabindex="-1" (click)="logout()">Cerrar sesión</a>
+        </li>
+      </ul>
+
+      <div *ngIf="isLoggedIn()" class="dropdown">
+        <a class="dropdown-toggle text-light">
+          Bienvenido Usuario
+        </a>
+      
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Editar perfil</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Cerrar sesión</a>
+        </div>
+      </div>
+
+      <form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login()"
+          class="form-inline my-2 my-lg-0">
+        <input [(ngModel)]="usertoLogin.username" name="username" required
+          class="form-control mr-sm-2" type="text" placeholder="Username">
+        <input [(ngModel)]="usertoLogin.password" name="password" required
+          class="form-control mr-sm-2" type="password" placeholder="Password">
+        <button [disabled] = "!loginForm.valid"
+          class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+      </form>
+      
+</nav>
