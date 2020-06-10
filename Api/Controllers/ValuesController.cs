@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -27,6 +29,7 @@ namespace Api.Controllers
             return Ok(values);
         }
 
+        [AllowAnonymous]
         [HttpGet("getvalue/{id}")]
         public async Task<IActionResult> GetValues(int Id)
         {
