@@ -44,10 +44,11 @@ namespace Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDTO userForLoginDTO)
         {
+
             var user = await _authRepository.Login(userForLoginDTO.Username.ToLower(), userForLoginDTO.Password);
 
             if (user == null)
-                return BadRequest();
+                return Unauthorized();
 
             var claims = new[]{
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
