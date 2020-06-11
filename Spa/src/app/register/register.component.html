@@ -3,18 +3,19 @@
     <hr>
   
     <div class="form-group">
-      <input [(ngModel)]="usertoRegister.username" name="username"
+      <input [(ngModel)]="usertoRegister.username" required name="username"
         type="text" class="form-control" placeholder="Username">
     </div>
   
     <div class="form-group">
-      <input [(ngModel)]="usertoRegister.password" name="password"
+      <input [(ngModel)]="usertoRegister.password" required name="password"
         type="password" class="form-control" placeholder="Password">
     </div>
   
     <div class="form-group text-center">
-      <button class="btn btn-success" type="submit">Registrarse</button>
+      <button [disabled]="!registerForm.valid" 
+        class="btn btn-success" type="submit">Registrarse</button>
       <button class="btn btn-default" type="button" (click)="cancelRegisterMode()">Cancelar</button>
     </div>
-    
+
   </form>

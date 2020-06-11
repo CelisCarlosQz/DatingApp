@@ -28,7 +28,7 @@ namespace Api.Controllers
         public async Task<IActionResult> Register(UserForRegisterDTO userForRegisterDTO)
         {
             userForRegisterDTO.Username = userForRegisterDTO.Username.ToLower();
-            if (await _authRepository.UserExist(userForRegisterDTO.Username)) return BadRequest("Username already exists!");
+            if (await _authRepository.UserExist(userForRegisterDTO.Username)) return BadRequest("El nombre de usuario ya existe");
 
             Users userToCreate = new Users()
             {
