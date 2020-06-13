@@ -18,6 +18,9 @@ import { RegisterComponent } from './register/register.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
+import { MatchesComponent } from './matches/matches.component';
+import { MessagesComponent } from './messages/messages.component';
+import { ListsComponent } from './lists/lists.component';
 
 
 @NgModule({
@@ -26,7 +29,10 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
     ValueComponent,
     NavComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    MatchesComponent,
+    MessagesComponent,
+    ListsComponent
   ],
   imports: [
     BrowserModule,
