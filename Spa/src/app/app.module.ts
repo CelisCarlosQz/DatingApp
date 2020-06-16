@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,12 +16,30 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { MatchesComponent } from './matches/matches.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
+import { MatchesCardComponent } from './matches/matches-card/matches-card.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { MatchesDetailComponent } from './matches/matches-detail/matches-detail.component';
+import { UserService } from './_services/user.service';
+import { MatchesDetailResolver } from './_resolvers/matches_detail.resolver';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+};
+
+export class CustomHammerConfig extends HammerGestureConfig  {
+  overrides = {
+      pinch: { enable: false },
+      rotate: { enable: false }
+  };
+}
 
 @NgModule({
   declarations: [
@@ -32,7 +50,9 @@ import { ListsComponent } from './lists/lists.component';
     RegisterComponent,
     MatchesComponent,
     MessagesComponent,
-    ListsComponent
+    ListsComponent,
+    MatchesCardComponent,
+    MatchesDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -40,11 +60,24 @@ import { ListsComponent } from './lists/lists.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    BsDropdownModule.forRoot()
+    NgxGalleryModule,
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    JwtModule.forRoot({
+      config:
+      {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/auth']  
+      }
+    })
   ],
   providers: [
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
     AuthService,
+    UserService,
     AlertifyService,
+    MatchesDetailResolver, // When Tryinh To Get One User
     ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]

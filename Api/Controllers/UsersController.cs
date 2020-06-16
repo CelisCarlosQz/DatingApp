@@ -22,7 +22,7 @@ namespace Api.Controllers
             _datingRepository = datingRepository;
         }
 
-        [HttpGet]
+        [HttpGet] // -> Same As /
         public async Task<IActionResult> GetUsers()
         {
             var users = await _datingRepository.GetUsers();

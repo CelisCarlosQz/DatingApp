@@ -1,1 +1,7 @@
-<p>matches works!</p>
+<div class="container mt-5"> <!-- Bootstrap Class -->
+    <div class="row">
+        <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6"> <!-- Each Row Will Have 2 Cols, Row1: Im1, Im2, Im3, Row2: Im4 Im5 Im6 -->
+            <app-matches-card [user]="user"></app-matches-card>
+        </div>
+    </div>
+</div>
