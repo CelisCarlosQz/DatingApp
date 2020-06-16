@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Controllers
 {
+    // UserForLoginDTO - UserForRegisterDTO
     [Route("[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
