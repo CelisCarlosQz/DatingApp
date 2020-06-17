@@ -29,6 +29,11 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { MatchesDetailComponent } from './matches/matches-detail/matches-detail.component';
 import { UserService } from './_services/user.service';
 import { MatchesDetailResolver } from './_resolvers/matches_detail.resolver';
+import { EditComponent } from './nav/edit/edit.component';
+import { EditResolver } from './_resolvers/edit.resolver';
+
+import { AuthGuard } from './_guards/auth.guard';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -52,7 +57,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     MessagesComponent,
     ListsComponent,
     MatchesCardComponent,
-    MatchesDetailComponent
+    MatchesDetailComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +84,9 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     UserService,
     AlertifyService,
     MatchesDetailResolver, // When Tryinh To Get One User
+    EditResolver,
+    AuthGuard,
+    PreventUnsavedChanges,
     ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]

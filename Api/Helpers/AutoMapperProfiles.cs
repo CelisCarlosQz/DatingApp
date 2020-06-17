@@ -22,6 +22,7 @@ namespace Api.Helpers
                     src => src.MapFrom(p => p.Photos.FirstOrDefault(x => x.IsMain).Url));
 
             CreateMap<Photos, PhotosDetailsDTO>();
+            CreateMap<UserForUpdateDTO, Users>(); // Maps Only The Variables At UserForUpdateDTO
         }
     }
 }

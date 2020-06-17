@@ -7,6 +7,9 @@ import { ListsComponent } from './lists/lists.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { MatchesDetailComponent } from './matches/matches-detail/matches-detail.component';
 import { MatchesDetailResolver } from './_resolvers/matches_detail.resolver';
+import { EditComponent } from './nav/edit/edit.component';
+import { EditResolver } from './_resolvers/edit.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 
 const routes: Routes = 
@@ -17,6 +20,8 @@ const routes: Routes =
       runGuardsAndResolvers: 'always',
       canActivate: [AuthGuard],
       children: [
+        { path: 'edit', component: EditComponent, resolve: {user: EditResolver}, 
+          canDeactivate: [PreventUnsavedChanges] },
         { path: 'matches', component: MatchesComponent },
         { path: 'matches/:id', component: MatchesDetailComponent, resolve: {user: MatchesDetailResolver} },
         { path: 'messages', component: MessagesComponent },

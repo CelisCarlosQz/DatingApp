@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   usertoLogin: any = {}
+  username: string = '';
 
   constructor(public authservice: AuthService, private alertify: AlertifyService, 
       private router: Router) { }
@@ -19,8 +20,8 @@ export class NavComponent implements OnInit {
 
   login() {
     this.authservice.login(this.usertoLogin).subscribe(next => {
+      this.username = this.authservice.getUsername();
       this.alertify.success('Bienvenido');
-
     }, error => {
       this.alertify.error(error);
     }, () => {

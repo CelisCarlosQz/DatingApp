@@ -21,7 +21,6 @@ export class AuthService {
         const tokenObj = response;
           if(tokenObj){
             localStorage.setItem('token', tokenObj.token);
-            this.decodedToken = this.jwtHelper.decodeToken(tokenObj.token);
           }
       })
     );
@@ -34,5 +33,15 @@ export class AuthService {
 
   register(usertoRegister: any){
     return this.http.post(this.baseUrl + 'register', usertoRegister);
+  }
+
+  getUserId(){
+    const token = this.jwtHelper.decodeToken(localStorage.getItem('token'));
+    return token['nameid'];
+  }
+
+  getUsername(){
+    const token = this.jwtHelper.decodeToken(localStorage.getItem('token'));
+    return token['unique_name'];
   }
 }

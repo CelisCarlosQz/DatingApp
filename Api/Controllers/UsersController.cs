@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.DTOs;
@@ -40,6 +42,25 @@ namespace Api.Controllers
             var usertoReturn = _mapper.Map<UserDetailDTO>(user);
 
             return Ok(usertoReturn);
+        }
+
+        // .NET Core Maps User Atributtes To userForUpdateDTO - With AutoMapper
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDTO userForUpdateDTO)
+        {
+            if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)){ // Get Id From Token
+                return Unauthorized();
+            }
+
+            var userFromRepo = await _datingRepository.GetUser(id);
+
+            _mapper.Map(userForUpdateDTO, userFromRepo);
+
+            if(await _datingRepository.SaveAll()){
+                return NoContent();
+            }
+
+            throw new Exception("Fallo en la actualización");
         }
     }
 }
