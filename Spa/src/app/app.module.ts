@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 import { AuthService } from './_services/auth.service';
 import { AlertifyService } from './_services/alertify.service';
@@ -62,7 +63,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     MatchesCardComponent,
     MatchesDetailComponent,
     EditComponent,
-    PhotoeditorComponent
+    PhotoeditorComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,

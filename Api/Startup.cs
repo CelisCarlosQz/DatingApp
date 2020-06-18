@@ -45,6 +45,7 @@ namespace Api
 
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
+            services.AddScoped<LogUserActivity>(); // Create new Instance Per Request
 
             services.AddDbContext<DataContext>(x => x.UseNpgsql(
                 Configuration.GetConnectionString("NpsqlConn")));

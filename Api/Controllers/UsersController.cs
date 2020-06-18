@@ -4,13 +4,14 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.DTOs;
+using Api.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    // UsersListDTO - UserDetailDTO
+    [ServiceFilter(typeof(LogUserActivity))] // -> Anytime These Methods Get Call - LogUserActivity Gets Called
     [Authorize]
     [ApiController]
     [Route("[controller]")]
