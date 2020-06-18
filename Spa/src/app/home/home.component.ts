@@ -11,6 +11,9 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('url');
+    localStorage.removeItem('gender');
   }
 
   toogleRegisterMode() {

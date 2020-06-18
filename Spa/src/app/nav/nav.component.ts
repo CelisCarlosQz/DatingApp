@@ -36,9 +36,17 @@ export class NavComponent implements OnInit {
     });
   }
 
+  goMain(){
+    if(!this.authservice.loggedIn()){
+      this.router.navigate(['/home']);
+    }
+    
+  }
+
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('url');
+    localStorage.removeItem('gender');
 
     this.alertify.warning('Adiós');
     this.router.navigate(['/home']);

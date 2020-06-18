@@ -19,6 +19,8 @@ import { RegisterComponent } from './register/register.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { NgxGalleryModule } from 'ngx-gallery';
 
@@ -38,6 +40,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoeditorComponent } from './nav/edit/photoeditor/photoeditor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { MatchesResolver } from './_resolvers/matches.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -77,6 +80,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     FileUploadModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
     TabsModule.forRoot(),
     JwtModule.forRoot({
       config:
@@ -94,6 +99,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     AlertifyService,
     MatchesDetailResolver, // When Tryinh To Get One User
     EditResolver,
+    MatchesResolver,
     AuthGuard,
     PreventUnsavedChanges,
     ErrorInterceptorProvider

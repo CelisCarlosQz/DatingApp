@@ -10,6 +10,7 @@ import { MatchesDetailResolver } from './_resolvers/matches_detail.resolver';
 import { EditComponent } from './nav/edit/edit.component';
 import { EditResolver } from './_resolvers/edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { MatchesResolver } from './_resolvers/matches.resolver';
 
 
 const routes: Routes = 
@@ -22,7 +23,7 @@ const routes: Routes =
       children: [
         { path: 'edit', component: EditComponent, resolve: {user: EditResolver}, 
           canDeactivate: [PreventUnsavedChanges] },
-        { path: 'matches', component: MatchesComponent },
+        { path: 'matches', component: MatchesComponent, resolve: {user: MatchesResolver} },
         { path: 'matches/:id', component: MatchesDetailComponent, resolve: {user: MatchesDetailResolver} },
         { path: 'messages', component: MessagesComponent },
         { path: 'lists', component: ListsComponent }

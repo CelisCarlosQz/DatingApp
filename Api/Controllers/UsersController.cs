@@ -25,12 +25,24 @@ namespace Api.Controllers
             _datingRepository = datingRepository;
         }
 
-        [HttpGet] // -> Same As /
-        public async Task<IActionResult> GetUsers()
+        [HttpGet] // -> Same As /, Get Values Needs To Be Passed On String pageNumber = &...
+        public async Task<IActionResult> GetUsers([FromQuery] UserParams userParams)
         {
-            var users = await _datingRepository.GetUsers();
+
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userFromRepo = await _datingRepository.GetUser(currentUserId);
+
+            userParams.UserId = currentUserId;
+            if(string.IsNullOrEmpty(userParams.Gender)){ // When Gender Is Not Defined In UserParams
+                userParams.Gender = userFromRepo.Gender == "male" ? "female": "male";
+            }
+
+            var users = await _datingRepository.GetUsers(userParams); // Page List OF Users
 
             var userstoReturn = _mapper.Map<IEnumerable<UsersListDTO>>(users); // <Destination>(Source)
+
+            Response.AddPagination(users.CurrentPage, users.PageSize, 
+                users.TotalCount, users.TotalPages); // My Header
 
             return Ok(userstoReturn);
         }

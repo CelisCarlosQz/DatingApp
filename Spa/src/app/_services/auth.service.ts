@@ -30,6 +30,7 @@ export class AuthService {
         const tokenObj = response;
           if(tokenObj){
             localStorage.setItem('token', tokenObj.token);
+            localStorage.setItem('gender', tokenObj.usertoLogin.gender);
             localStorage.setItem('url', tokenObj.usertoLogin.photoUrl);
             if(tokenObj.usertoLogin.photoUrl){
               this.changesNavPhoto(tokenObj.usertoLogin.photoUrl);

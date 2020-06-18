@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Api.Helpers;
 using Api.Models;
 
 namespace Api.Data
@@ -10,7 +11,7 @@ namespace Api.Data
         void Delete<T>(T entity) where T:class;
         Task<bool> SaveAll();
         Task<Users> GetUser(int id);
-        Task<IEnumerable<Users>> GetUsers();
+        Task<PageListed<Users>> GetUsers(UserParams userParams); // Pagination
         Task<Photos> GetPhoto(int id);
         Task<Photos> GetMainPhoto(int id);
     }
