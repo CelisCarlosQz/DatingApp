@@ -60,7 +60,7 @@ namespace Api.Controllers
                 return NoContent();
             }
 
-            throw new Exception("Fallo en la actualización");
+            return BadRequest("Fallo en la actualización");
         }
     }
 }

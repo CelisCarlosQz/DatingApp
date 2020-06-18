@@ -17,7 +17,8 @@ namespace Api.Data
         public async Task<Users> Login(string username, string password)
         {
 
-            var user = await _dataContext.Users.FirstOrDefaultAsync(x => x.Username == username);
+            var user = await _dataContext.Users.Include(p => p.Photos). // Will Include Photo On The User Obj
+                FirstOrDefaultAsync(x => x.Username == username);
 
             if(user == null)
                 return null;

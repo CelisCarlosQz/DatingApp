@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class EditComponent implements OnInit {
 
   user: User;
+  currentPhoto: string;
 
   @ViewChild('editForm', {static: true}) editForm: NgForm;
   
@@ -26,6 +27,7 @@ export class EditComponent implements OnInit {
         this.user = data['user'];
       }
     );
+    this.authService.currentPhotoUrl.subscribe(serviceUrl => this.currentPhoto = serviceUrl);
   }
 
   updateUser(){
@@ -39,5 +41,4 @@ export class EditComponent implements OnInit {
     );
     
   }
-
 }

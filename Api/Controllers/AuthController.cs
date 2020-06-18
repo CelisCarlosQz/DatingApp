@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Api.Data;
 using Api.DTOs;
 using Api.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -18,9 +19,11 @@ namespace Api.Controllers
     {
         private readonly IAuthRepository _authRepository;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository authRepository, IConfiguration configuration)
+        public AuthController(IAuthRepository authRepository, IConfiguration configuration, IMapper mapper)
         {
+            _mapper = mapper;
             _configuration = configuration;
             _authRepository = authRepository;
         }
@@ -29,7 +32,8 @@ namespace Api.Controllers
         public async Task<IActionResult> Register(UserForRegisterDTO userForRegisterDTO)
         {
             userForRegisterDTO.Username = userForRegisterDTO.Username.ToLower();
-            if (await _authRepository.UserExist(userForRegisterDTO.Username)) return BadRequest("El nombre de usuario ya existe");
+            if (await _authRepository.UserExist(userForRegisterDTO.Username))
+                return BadRequest("El nombre de usuario ya existe");
 
             Users userToCreate = new Users()
             {
@@ -61,7 +65,8 @@ namespace Api.Controllers
 
             var signingCreds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
-            var tokenDecriptor = new SecurityTokenDescriptor(){
+            var tokenDecriptor = new SecurityTokenDescriptor()
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = signingCreds
@@ -71,8 +76,12 @@ namespace Api.Controllers
 
             var token = tokenHandler.CreateToken(tokenDecriptor);
 
-            return Ok(new { 
-                token = tokenHandler.WriteToken(token)
+            var usertoLogin = _mapper.Map<UserToLoginDTO>(user);
+
+            return Ok(new
+            {
+                token = tokenHandler.WriteToken(token),
+                usertoLogin
             });
         }
     }

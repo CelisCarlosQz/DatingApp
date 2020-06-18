@@ -15,8 +15,12 @@
     </ul>
 
     <div *ngIf="isLoggedIn()" class="dropdown" dropdown>
+      <span class="mr-1">
+        <img class="profile-img"
+          src="{{photoUrl}}" alt="Profile">
+      </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
-        Bienvenido {{ username | titlecase}}
+        Hola {{ username | titlecase}}
       </a>
     
       <div class="dropdown-menu mt-3" *dropdownMenu>

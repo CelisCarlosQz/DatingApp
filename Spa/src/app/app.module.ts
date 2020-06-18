@@ -34,6 +34,8 @@ import { EditResolver } from './_resolvers/edit.resolver';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { PhotoeditorComponent } from './nav/edit/photoeditor/photoeditor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -58,7 +60,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     ListsComponent,
     MatchesCardComponent,
     MatchesDetailComponent,
-    EditComponent
+    EditComponent,
+    PhotoeditorComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     FormsModule,
     BrowserAnimationsModule,
     NgxGalleryModule,
+    FileUploadModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     JwtModule.forRoot({

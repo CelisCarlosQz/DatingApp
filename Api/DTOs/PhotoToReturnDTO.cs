@@ -1,16 +1,14 @@
 using System;
 
-namespace Api.Models
+namespace Api.DTOs
 {
-    public class Photos
+    public class PhotoToReturnDTO
     {
         public int Id { get; set; }
         public string Url { get; set; }
         public string Description { get; set; }
-        public string PublicId { get; set; } // Needs To Map The DTO
         public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
-        public Users User { get; set; }
-        public int UserId { get; set; }
+        public string PublicId { get; set; }
     }
 }

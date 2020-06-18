@@ -16,7 +16,7 @@
         <div class="col-sm-4">  
             <div class="card">
                 
-                <img src="{{user.photoUrl}}" alt="{{user.knownAs}}" class="card-img-top img-thumbnail">
+                <img src="{{currentPhoto}}" alt="{{user.knownAs}}" class="card-img-top img-thumbnail">
                 <div class="card-body">
                     <div>
                         <strong>Ubicación:</strong>
@@ -51,15 +51,15 @@
                             <h4>Descripción</h4>
                             <textarea class="form-control"
                                 name="introduction" [(ngModel)]="user.introduction" rows="6">
-                            </textarea>
+                            </textarea><br/>
                             <h4>Buscando</h4>
                             <textarea class="form-control"
                                 name="lookingFor" [(ngModel)]="user.lookingFor" rows="6">
-                            </textarea>
+                            </textarea><br/>
                             <h4>Intereses</h4>
                             <textarea class="form-control"
                                 name="interests" [(ngModel)]="user.interests" rows="6">
-                            </textarea>
+                            </textarea><br/>
                             <h4>Detalles de ubicación</h4>
                             <div class="form-inline">
                                 <label for="city">Ciudad</label>&nbsp;&nbsp;
@@ -73,7 +73,8 @@
                         </form>
                     </tab>
                     <tab heading="Editar Fotos">
-                        <p>Implementando...</p>
+                        <app-photoeditor 
+                            [photos]="user.photos"></app-photoeditor>
                     </tab>
                 </tabset>
             </div>

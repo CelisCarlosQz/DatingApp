@@ -11,5 +11,7 @@ namespace Api.Data
         Task<bool> SaveAll();
         Task<Users> GetUser(int id);
         Task<IEnumerable<Users>> GetUsers();
+        Task<Photos> GetPhoto(int id);
+        Task<Photos> GetMainPhoto(int id);
     }
 }

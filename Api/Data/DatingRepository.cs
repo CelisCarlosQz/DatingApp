@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,18 @@ namespace Api.Data
         public void Delete<T>(T entity) where T : class
         {
             _dataContext.Remove(entity);
+        }
+
+        public async Task<Photos> GetMainPhoto(int id)
+        {
+            var mainPhoto = await _dataContext.Photos.Where(u => u.UserId == id).FirstOrDefaultAsync(x => x.IsMain);
+            return mainPhoto;
+        }
+
+        public async Task<Photos> GetPhoto(int id)
+        {
+            var photo = await _dataContext.Photos.FirstOrDefaultAsync(x => x.Id == id);
+            return photo;
         }
 
         public async Task<Users> GetUser(int id)
