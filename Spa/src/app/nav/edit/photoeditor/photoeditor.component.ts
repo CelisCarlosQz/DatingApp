@@ -58,11 +58,19 @@ export class PhotoeditorComponent implements OnInit {
           isMain: res.isMain
         };
         this.photos.push(photo);
+
+        var index = this.photos.findIndex(p => p.description == 'DF_DELETE_IS_OK');
+        if(index == 0){
+          this.authService.changesNavPhoto(photo.url);
+          localStorage.setItem('url', photo.url);
+          this.photos.splice(this.photos.findIndex(p => p.description == 'DF_DELETE_IS_OK'), 1);
+        }   
       }
     };
   }
 
   setMainPhoto(photo: Photo) {
+    
     this.userService.setMainPhoto(this.authService.getUserId(), photo.id).subscribe(
       () => {
         this.currentMain = this.photos.filter(p => p.isMain == true)[0];

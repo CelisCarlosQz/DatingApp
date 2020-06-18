@@ -107,8 +107,11 @@ namespace Api.Controllers
 
                 var photoObj = _mapper.Map<Photos>(photoForUploadDTO); // Source - Destination
 
-                if(!userFromRepo.Photos.Any(p => p.IsMain)){
-                    // User Doesn't Have A Main Picture
+                if(userFromRepo.Photos.Any(p => p.Description == "DF_DELETE_IS_OK")){ // IF That User Has Any Photo With That Description
+                    var photo = userFromRepo.Photos.FirstOrDefault(p => p.Description == "DF_DELETE_IS_OK");
+                    var photoFromRepo = await _datingRepository.GetPhoto(photo.Id);
+                    _datingRepository.Delete(photoFromRepo);
+
                     photoObj.IsMain = true;
                 }
                 

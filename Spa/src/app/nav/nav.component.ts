@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
+
 export class NavComponent implements OnInit {
   usertoLogin: any = {}
   username: string = '';
@@ -21,10 +24,11 @@ export class NavComponent implements OnInit {
     this.authservice.currentPhotoUrl.subscribe(serviceUrl => this.photoUrl = serviceUrl);
   }
 
-  login() {
+  login(loginForm: NgForm) {
     this.authservice.login(this.usertoLogin).subscribe(next => {
       this.username = this.authservice.getUsername();
       this.alertify.success('Bienvenido');
+      loginForm.reset();
     }, error => {
       this.alertify.error(error);
     }, () => {
@@ -35,6 +39,7 @@ export class NavComponent implements OnInit {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('url');
+
     this.alertify.warning('Adiós');
     this.router.navigate(['/home']);
   }

@@ -26,6 +26,9 @@ namespace Api.Helpers
 
             CreateMap<Photos, PhotoToReturnDTO>();
             CreateMap<PhotoForUploadDTO, Photos>();
+            CreateMap<PhotoForRegisterDTO, Photos>();
+
+            CreateMap<UserForRegisterDTO, Users>(); // .Map<Users>(userForRegisterDTO)
 
             CreateMap<Users, UserToLoginDTO>()
                 .ForMember(dest => dest.PhotoUrl, src => src.MapFrom(p => p.Photos.FirstOrDefault(x => x.IsMain).Url));

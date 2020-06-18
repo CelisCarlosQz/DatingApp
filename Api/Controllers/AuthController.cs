@@ -35,14 +35,14 @@ namespace Api.Controllers
             if (await _authRepository.UserExist(userForRegisterDTO.Username))
                 return BadRequest("El nombre de usuario ya existe");
 
-            Users userToCreate = new Users()
-            {
-                Username = userForRegisterDTO.Username
-            };
+            var userToCreate = _mapper.Map<Users>(userForRegisterDTO);
 
             var createdUser = await _authRepository.Register(userToCreate, userForRegisterDTO.Password);
 
-            return StatusCode(201);
+            var usertoReturn = _mapper.Map<UserDetailDTO>(createdUser);
+
+            return CreatedAtRoute("GetUser", new { Controller = "Users", id = createdUser.Id },
+                usertoReturn);
 
         }
 

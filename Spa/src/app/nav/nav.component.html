@@ -20,7 +20,7 @@
           src="{{photoUrl}}" alt="Profile">
       </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
-        Hola {{ username | titlecase}}
+        Hola {{ this.authservice.getUsername() | titlecase}}
       </a>
     
       <div class="dropdown-menu mt-3" *dropdownMenu>
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login()"
+    <form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login(loginForm)"
         class="form-inline my-2 my-lg-0">
       <input [(ngModel)]="usertoLogin.username" name="username" required
         class="form-control mr-sm-2" type="text" placeholder="Username">

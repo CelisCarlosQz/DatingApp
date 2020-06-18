@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 
 import { BehaviorSubject } from 'rxjs';
+import { User } from '../_models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,9 @@ export class AuthService {
           if(tokenObj){
             localStorage.setItem('token', tokenObj.token);
             localStorage.setItem('url', tokenObj.usertoLogin.photoUrl);
-            this.changesNavPhoto(tokenObj.usertoLogin.photoUrl);
+            if(tokenObj.usertoLogin.photoUrl){
+              this.changesNavPhoto(tokenObj.usertoLogin.photoUrl);
+            }       
           }
       })
     );
@@ -41,7 +44,7 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  register(usertoRegister: any){
+  register(usertoRegister: User){
     return this.http.post(this.baseUrl + 'register', usertoRegister);
   }
 
