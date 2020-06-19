@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Api.Data;
 using Api.DTOs;
 using Api.Helpers;
+using Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,6 +75,37 @@ namespace Api.Controllers
             }
 
             return BadRequest("Fallo en la actualización");
+        }
+
+        [HttpPost("{userId}/like/{recipientId}")]
+        public async Task<IActionResult> LikeUser(int userId, int recipientId)
+        {
+            if(userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)){
+                return Unauthorized();
+            }
+
+            var like = await _datingRepository.GetLike(userId, recipientId);
+
+            if(like != null){
+                return BadRequest("Ya te ha gustado este usuario");
+            }
+
+            if(await _datingRepository.GetUser(recipientId) == null){
+                return NotFound();
+            }
+
+            like = new Likes{
+                LikerId = userId,
+                LikeeId = recipientId
+            };
+
+            _datingRepository.Add<Likes>(like);
+
+            if(await _datingRepository.SaveAll()){
+                return Ok();
+            }
+
+            return BadRequest("No se pudo ingresar el like");
         }
     }
 }

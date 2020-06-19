@@ -3,34 +3,23 @@ using System;
 using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200618232415_RemovedValues")]
+    partial class RemovedValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            modelBuilder.Entity("Api.Models.Likes", b =>
-                {
-                    b.Property<int>("LikerId");
-
-                    b.Property<int>("LikeeId");
-
-                    b.HasKey("LikerId", "LikeeId");
-
-                    b.HasIndex("LikeeId");
-
-                    b.ToTable("Likes");
-                });
 
             modelBuilder.Entity("Api.Models.Photos", b =>
                 {
@@ -90,19 +79,6 @@ namespace Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Api.Models.Likes", b =>
-                {
-                    b.HasOne("Api.Models.Users", "Likee")
-                        .WithMany("Likers")
-                        .HasForeignKey("LikeeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Api.Models.Users", "Liker")
-                        .WithMany("Likees")
-                        .HasForeignKey("LikerId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Api.Models.Photos", b =>

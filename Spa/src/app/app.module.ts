@@ -41,6 +41,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoeditorComponent } from './nav/edit/photoeditor/photoeditor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatchesResolver } from './_resolvers/matches.resolver';
+import { ListsResolver } from './_resolvers/lists.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -100,6 +101,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     MatchesDetailResolver, // When Tryinh To Get One User
     EditResolver,
     MatchesResolver,
+    ListsResolver,
     AuthGuard,
     PreventUnsavedChanges,
     ErrorInterceptorProvider

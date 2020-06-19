@@ -26,6 +26,12 @@ namespace Api.Data
             _dataContext.Remove(entity);
         }
 
+        public async Task<Likes> GetLike(int userId, int recipientId)
+        {
+            return await _dataContext.Likes.FirstOrDefaultAsync(u => u.LikerId == userId &&
+                u.LikeeId == recipientId);
+        }
+
         public async Task<Photos> GetMainPhoto(int id)
         {
             var mainPhoto = await _dataContext.Photos.Where(u => u.UserId == id).FirstOrDefaultAsync(x => x.IsMain);
@@ -47,12 +53,22 @@ namespace Api.Data
 
         public async Task<PageListed<Users>> GetUsers(UserParams userParams)
         {
-            var users = _dataContext.Users.Include(p => p.Photos).OrderByDescending(u => u.LastActive).
-                AsQueryable();
+            var users = _dataContext.Users.Include(p => p.Photos).
+                OrderByDescending(u => u.LastActive).AsQueryable();
 
             users = users.Where(u => u.Id != userParams.UserId);
 
             users = users.Where(u => u.Gender == userParams.Gender);
+
+            if(userParams.Likers){ // Users That Have Liked ME!
+                var userIveLiked = await GetUserLikes(userParams.UserId, userParams.Likers);
+                users = users.Where(u => userIveLiked.Contains(u.Id));
+            }
+
+            if(userParams.Likees){ // Users That I Have Liked
+                var usersHavelikedme = await GetUserLikes(userParams.UserId, userParams.Likers);
+                users = users.Where(u => usersHavelikedme.Contains(u.Id));
+            }
 
             if(userParams.MinAge != 18 || userParams.MaxAge != 99){
                 var minDateOb = DateTime.Today.AddYears(-userParams.MaxAge - 1);
@@ -74,6 +90,17 @@ namespace Api.Data
             }
 
             return await PageListed<Users>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+        }
+
+        private async Task<IEnumerable<int>> GetUserLikes(int userId, bool likers)
+        {
+            var user = await _dataContext.Users.Include(x => x.Likers).
+                Include(x => x.Likees).FirstOrDefaultAsync(u => u.Id == userId);
+            if(likers){
+                return user.Likers.Where(u => u.LikeeId == userId).Select(i => i.LikerId);
+            }else{
+                return user.Likees.Where(u => u.LikerId == userId).Select(i => i.LikeeId);
+            }
         }
 
         public async Task<bool> SaveAll()

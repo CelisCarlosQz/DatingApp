@@ -16,7 +16,8 @@
         {
           "url": "http://res.cloudinary.com/celiscarlosqz/image/upload/v1592442919/xkldbm28xd8bjl4vkwmb.png",
           "isMain": true,
-          "description": "Jay"
+          "description": "Jay",
+          "publicId" : "xkldbm28xd8bjl4vkwmb"
         }
       ]
     },
@@ -37,7 +38,9 @@
         {
           "url": "http://res.cloudinary.com/celiscarlosqz/image/upload/v1592443516/s3pwwgnbyrbbgfhdxfgv.png",
           "isMain": true,
-          "description": "Mitchell"
+          "description": "Mitchell",
+          "publicId" : "s3pwwgnbyrbbgfhdxfgv"
+          
         }
       ]
     },
@@ -58,7 +61,8 @@
         {
           "url": "http://res.cloudinary.com/celiscarlosqz/image/upload/v1592443221/mcwig0syd2czibe5lzqq.jpg",
           "isMain": true,
-          "description": "Gloria"
+          "description": "Gloria",
+          "publicId" : "mcwig0syd2czibe5lzqq"
         }
       ]
     },
@@ -79,7 +83,8 @@
         {
           "url": "http://res.cloudinary.com/celiscarlosqz/image/upload/v1592443822/u1bvaksw8m1ewazo1i1p.jpg",
           "isMain": true,
-          "description": "Haley"
+          "description": "Haley",
+          "publicId" : "u1bvaksw8m1ewazo1i1p"
         }
       ]
     },
@@ -100,7 +105,8 @@
         {
           "url": "http://res.cloudinary.com/celiscarlosqz/image/upload/v1592444058/reeumsexbagbgzx1sa7j.png",
           "isMain": true,
-          "description": "Alex"
+          "description": "Alex",
+          "publicId" : "reeumsexbagbgzx1sa7j"
         }
       ]
     },
@@ -121,7 +127,8 @@
             {
               "url": "http://res.cloudinary.com/celiscarlosqz/image/upload/v1592444233/bluviqcifsafkggvx9bz.png",
               "isMain": true,
-              "description": "Luke"
+              "description": "Luke",
+              "publicId" : "bluviqcifsafkggvx9bz"
             }
           ]
         }

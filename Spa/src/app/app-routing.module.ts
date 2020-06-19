@@ -11,6 +11,7 @@ import { EditComponent } from './nav/edit/edit.component';
 import { EditResolver } from './_resolvers/edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { MatchesResolver } from './_resolvers/matches.resolver';
+import { ListsResolver } from './_resolvers/lists.resolver';
 
 
 const routes: Routes = 
@@ -26,7 +27,7 @@ const routes: Routes =
         { path: 'matches', component: MatchesComponent, resolve: {user: MatchesResolver} },
         { path: 'matches/:id', component: MatchesDetailComponent, resolve: {user: MatchesDetailResolver} },
         { path: 'messages', component: MessagesComponent },
-        { path: 'lists', component: ListsComponent }
+        { path: 'lists', component: ListsComponent, resolve: {users: ListsResolver} }
       ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

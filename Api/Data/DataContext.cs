@@ -6,8 +6,26 @@ namespace Api.Data
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-        public DbSet<Value> Values { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Photos> Photos { get; set; }
+        public DbSet<Likes> Likes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Likes>() // Compound PK
+                .HasKey(k => new {k.LikerId, k.LikeeId});
+
+            modelBuilder.Entity<Likes>()
+                .HasOne(u => u.Likee)
+                .WithMany(u => u.Likers)
+                .HasForeignKey(u => u.LikeeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Likes>()
+                .HasOne(u => u.Liker)
+                .WithMany(u => u.Likees)
+                .HasForeignKey(u => u.LikerId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }
