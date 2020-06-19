@@ -33,11 +33,11 @@
     <form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login(loginForm)"
         class="form-inline my-2 my-lg-0">
       <input [(ngModel)]="usertoLogin.username" name="username" required
-        class="form-control mr-sm-2" type="text" placeholder="Username">
+        class="form-control mr-sm-2" type="text" placeholder="Usuario">
       <input [(ngModel)]="usertoLogin.password" name="password" required
-        class="form-control mr-sm-2" type="password" placeholder="Password">
+        class="form-control mr-sm-2" type="password" placeholder="Contraseña">
       <button [disabled] = "!loginForm.valid"
-        class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+        class="btn btn-success my-2 my-sm-0" type="submit">Ingresar</button>
     </form>
   </div>
  

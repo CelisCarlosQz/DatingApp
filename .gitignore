@@ -7,3 +7,6 @@ Spa/node_modules
 .DS_Store
 Spa/.DS_Store
 Api/.DS_Store
+Api/wwwroot
+DatingApp.pem
+Demo.mov

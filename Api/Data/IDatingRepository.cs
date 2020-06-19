@@ -16,5 +16,9 @@ namespace Api.Data
         Task<Photos> GetMainPhoto(int id);
 
         Task<Likes> GetLike(int userId, int recipientId);
+
+        Task<Messages> GetMessages(int id);
+        Task<PageListed<Messages>> GetMessagesForUser(MessageParams messageParams);
+        Task<IEnumerable<Messages>> GetMessageThread(int userId, int recipientId);
     }
 }

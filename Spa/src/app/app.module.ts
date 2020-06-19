@@ -42,6 +42,8 @@ import { PhotoeditorComponent } from './nav/edit/photoeditor/photoeditor.compone
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatchesResolver } from './_resolvers/matches.resolver';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MatchesMessagesComponent } from './matches/matches-detail/matches-messages/matches-messages.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -68,7 +70,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     MatchesDetailComponent,
     EditComponent,
     PhotoeditorComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    MatchesMessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +104,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     MatchesDetailResolver, // When Tryinh To Get One User
     EditResolver,
     MatchesResolver,
+    MessagesResolver,
     ListsResolver,
     AuthGuard,
     PreventUnsavedChanges,

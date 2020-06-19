@@ -22,5 +22,7 @@ namespace Api.Models
         public ICollection<Photos> Photos { get; set; }
         public ICollection<Likes> Likers { get; set; }
         public ICollection<Likes> Likees { get; set; }
+        public ICollection<Messages> MessagesSent { get; set; }
+        public ICollection<Messages> MessagesReceived { get; set; }
     }
 }

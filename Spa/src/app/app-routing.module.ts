@@ -12,6 +12,7 @@ import { EditResolver } from './_resolvers/edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { MatchesResolver } from './_resolvers/matches.resolver';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
 
 
 const routes: Routes = 
@@ -26,7 +27,7 @@ const routes: Routes =
           canDeactivate: [PreventUnsavedChanges] },
         { path: 'matches', component: MatchesComponent, resolve: {user: MatchesResolver} },
         { path: 'matches/:id', component: MatchesDetailComponent, resolve: {user: MatchesDetailResolver} },
-        { path: 'messages', component: MessagesComponent },
+        { path: 'messages', component: MessagesComponent, resolve: {messages: MessagesResolver} },
         { path: 'lists', component: ListsComponent, resolve: {users: ListsResolver} }
       ]
     },

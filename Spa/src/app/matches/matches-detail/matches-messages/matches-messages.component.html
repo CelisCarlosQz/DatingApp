@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-body">
+        <div *ngIf="messages?.length === 0">
+            <p>Aún no hay mensajes, dile hola!</p>
+        </div>
+        <ul class="chat">
+            <li *ngFor="let msg of messages">
+                <!-- Para Ellos -->
+                <div *ngIf="msg.senderId == recipientId">
+                    <span class="chat-img float-left">
+                        <img src="{{msg.senderPhotoUrl}}" alt="{{msg.senderKnownAs}}" class="rounded-circle">
+                    </span>
+                    <div class="chat-body">
+                        <div class="header">
+                            <strong class="primary-fonr">{{msg.senderKnownAs}}</strong>
+                            <small class="text-muted float-right">
+                                <span class="fa fa-clock-o">{{msg.messageSent | timeAgo}}</span>
+                            </small>
+                        </div>
+                        <p>{{msg.content}}</p>
+                    </div>
+                </div>
+
+                <!-- Para Mi -->
+                <div *ngIf="msg.senderId != recipientId">
+                    <span class="chat-img float-right">
+                        <img src="{{msg.senderPhotoUrl}}" alt="{{msg.senderKnownAs}}" class="rounded-circle">
+                    </span>
+                    <div class="chat-body">
+                        <div class="header">
+                            <small class="text-muted">
+                                <span class="fa fa-clock-o">&nbsp;&nbsp;{{msg.messageSent | timeAgo}}</span>
+                                <span *ngIf="!msg.isRead"
+                                    class="text-danger">&nbsp;&nbsp;(Sin Leer)</span>
+                                <span *ngIf="msg.isRead"
+                                    class="text-success">&nbsp;&nbsp;(Leído {{msg.dateRead | timeAgo}})</span>
+                            </small>
+                            <strong class="primary-font float-right">{{msg.senderKnownAs}}</strong>
+
+                        </div>
+                        <p>{{msg.content}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        
+    </div>
+    <form class="mt-5"
+        #msgForm="ngForm" (ngSubmit)="sendMessage()">
+        <div class="input-group">
+            <input [(ngModel)]="newMessage.content" name="content"
+                type="text" class="form-control input-sm" placeholder="Envia un mensaje">
+            <div class="input-group-append">
+                <button [disabled]="!msgForm.valid"
+                    class="btn btn-primary">Enviar</button>
+            </div>
+        </div>
+    </form>
+</div>

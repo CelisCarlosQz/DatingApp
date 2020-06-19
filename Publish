@@ -1,0 +1,157 @@
+Preparation
+
+1. Building Angular Application
+    - "outputPath": "../Api/wwwroot",
+
+2. Allow Api To Serve Static Files()
+    - app.UseDefaultFiles()
+    - app.UseStaticFiles()
+
+3. Allow Api To Understand Angular Routes
+    - app.UseMvc(routes => {
+            routes.MapSpaFallbackRoute(
+                name: "spa-fallback",
+                defaults: new { controller = "Fallback", 
+                    action = "Index"}
+            );
+      });
+
+    - Create FallbackController
+
+4. Add Api Url To Our environment.prod File 
+    - Check For Any Hardcoded http://localhost:5000...
+
+5. "buildOptimizer": false, - Fix Alertify Animation Error
+
+6. Build Application In Production
+    - ng build --prod
+
+7. Change Api To Production - launchSettings
+
+EC2 Instance
+
+- AMI is Ubuntu 18.04
+- Instance Type - [t2.micro]
+- MyVPC - Ohio
+- [Security Group - DF]
+- [Tags EC2 And Volume - DatingApp - Instance]
+- [DatingApp] - Private Key
+- Set Elastic Ip - 3.128.51.226
+
+Server Setup
+
+Install PostgreSQL
+    - sudo apt update
+    - sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+    - sudo wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
+    - sudo apt-get update
+    - sudo apt-get upgrade
+    - sudo apt-get install postgresql postgresql-contrib
+    - sudo -i -u postgres
+    - createuser --interactive
+        - dating_app : superuser
+    - createdb DatingAppDb
+    - psql
+    - ALTER ROLE dating_app WITH PASSWORD '12';
+    - \du+ [User Exists]
+    - \l [Database Exists]
+    - \q
+    - exit
+    - sudo adduser dating_app
+    - sudo -u dating_app psql -d DatingAppDb
+    - \q
+    - exit
+    - sudo -i -u postgres
+    - psql
+    - GRANT ALL PRIVILEGES ON DATABASE "DatingAppDb" TO dating_app;
+    - \q
+    - exit
+    - sudo netstat -plunt |grep postgres [Confirm Port Number - DF:5432]
+
+Install ASP.NET Core Runtime
+    - sudo wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    - sudo dpkg -i packages-microsoft-prod.deb
+    - sudo apt-get update
+    - sudo apt-get install -y apt-transport-https
+    - sudo apt-get update
+    - sudo apt-get install aspnetcore-runtime-2.2
+
+Install Apache2
+    - sudo apt-get install apache2
+    - sudo a2enmod proxy proxy_http proxy_html [Proxy Request From Apache To Kestrel]
+    - sudo systemctl restart apache2
+    - sudo nano /etc/apache2/sites-available/datingapp.conf
+        - <VirtualHost *:80>
+            ProxyPreserveHost On
+            ProxyPass / http://127.0.0.1:5000/
+            ProxyPassReverse / http://127.0.0.1:5000/
+
+            ErrorLog /var/log/apache2/datingapp-error.log
+            CustomLog /var/log/apache2/datingapp-access.log common
+
+            </VirtualHost>
+    - sudo a2ensite datingapp
+    - sudo a2dissite 000-default
+    - sudo systemctl reload apache2
+
+Deploy Code
+    - .vscode - Create settings.json
+        - {
+            "deploy.reloaded": {
+                "packages": [
+                {
+                    "name": "Version 1.0.0",
+                    "description": "Package version 1.0.0",
+
+                    "files": [
+                        "Api/bin/Release/netcoreapp2.2/publish/**"
+                    ]
+                }
+            ],
+
+            "targets": [
+                {
+                    "type": "sftp",
+                    "name": "Linux",
+                    "description": "SFTP folder",
+
+                    "host": "3.128.51.226", "port": 22,
+                    "user": "ubuntu", "privateKey": "/Users/celis/Documents/Projects/DatingApp/DatingApp.pem",
+
+                    "dir": "/var/datingapp",
+                    "mappings": {
+                        "Api/bin/Release/netcoreapp2.2/publish/**": "/"
+                    }
+                }
+            ]
+         }
+         }
+    - On Server
+        - cd /var
+        - sudo mkdir datingapp
+        - sudo chmod -R 777 datingapp
+        - dotnet publish -c Release
+    - Confirm Files
+
+Kestrel Web Service
+    - sudo nano /etc/systemd/system/kestrel-web.service
+        [Unit]
+        Description=Kestrel service running on Ubuntu 18.04
+        [Service]
+        WorkingDirectory=/var/datingapp
+        ExecStart=/usr/bin/dotnet /var/datingapp/Api.dll
+        Restart=always
+        RestartSec=10
+        SyslogIdentifier=datingapp
+        User=www-data
+        Environment=ASPNETCORE_ENVIRONMENT=Production
+        [Install]
+        WantedBy=multi-user.target
+    - sudo systemctl enable kestrel-web.service
+    - sudo systemctl start kestrel-web.service
+    - netstat -ntpl [Check Port 5000]
+    - Check IF Data Was Seeded To DB - OK
+    - sudo systemctl restart apache2
+
+Confirm On Browser
+    - 3.128.51.226

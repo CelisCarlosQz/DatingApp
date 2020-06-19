@@ -26,7 +26,7 @@
                         <button class="btn btn-primary">
                             Me gusta
                         </button>
-                        <button class="btn btn-success">
+                        <button class="btn btn-success" (click)="selectTab(3)">
                             Mensajes
                         </button>
                     </div>
@@ -35,7 +35,7 @@
         </div>
         <div class="col-sm-8">
             <div class="tab-panel">
-                <tabset class="member-tabset">
+                <tabset class="member-tabset" #memberTab>
                     <tab heading="Sobre {{user.knownAs}}">
                         <h4>Introducción</h4>
                         <p>
@@ -54,7 +54,7 @@
                         <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
                     </tab>
                     <tab heading="Mensajes">
-                        <h4>Mensajes</h4>
+                        <app-matches-messages [recipientId]="user.id"></app-matches-messages>
                     </tab>
                 </tabset>
             </div>
